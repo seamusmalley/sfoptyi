@@ -1,2 +1,3 @@
 /src/private.py
 *.pyc
+.cache*
