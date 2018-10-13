@@ -26,7 +26,7 @@ if token:
 
     pl_ref = int(input("\nPlaylist ID to shuffle: "))
 
-    print("Shuffling %s...\n" % playlists['items'][pl_ref]['name'])
+    print("Shuffling %s..." % playlists['items'][pl_ref]['name'])
 
     playlist_names = [playlist['name'] for playlist in playlists['items']]
 
@@ -44,12 +44,9 @@ if token:
     pl_id = playlists['items'][playlist_names.index(pl_name)]['uri'].split(':')[4]
     shuffled_pl_id = playlists['items'][playlist_names.index(shuffled_pl_name)]['uri'].split(':')[4]
 
-    #TODO read tracks from original playlist
-
     pl_tracks = [track['track']['id'] for track in spotify.user_playlist(username, pl_id)['tracks']['items']]
-    print(pl_tracks)
+    random.shuffle(pl_tracks)
 
+    spotify.user_playlist_replace_tracks(username, shuffled_pl_id, pl_tracks)
 
-
-    #TODO shuffle tracks
-    #TODO replace tracks in shuffled playlist with new shuffle of songs
+    print("Enjoy!")
