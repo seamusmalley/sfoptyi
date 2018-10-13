@@ -32,14 +32,20 @@ if token:
     playlist_names = [playlist['name'] for playlist in playlists['items']]
 
     pl_name = playlists['items'][pl_ref]['name']
-    shuffled_pl_name = 'sfoptyi-' + pl_name
-
-    pl_id = playlists['items'][playlist_names.index(pl_name)]['uri'].split(':')[4]
+    if pl_name.startswith('sfoptyi'):
+        shuffled_pl_name = pl_name
+    else:
+        shuffled_pl_name = 'sfoptyi-' + pl_name
 
     if shuffled_pl_name not in playlist_names:
-        #TODO create playlist
-        #TODO get shuffled_pl_id
+        spotify.user_playlist_create(username, shuffled_pl_name, public=True)
+        playlists = spotify.user_playlists(username)
+        playlist_names = [playlist['name'] for playlist in playlists['items']]
+
+    pl_id = playlists['items'][playlist_names.index(pl_name)]['uri'].split(':')[4]
+    shuffled_pl_id = playlists['items'][playlist_names.index(shuffled_pl_name)]['uri'].split(':')[4]
 
     #TODO read tracks from original playlist
+
     #TODO shuffle tracks
     #TODO replace tracks in shuffled playlist with new shuffle of songs
