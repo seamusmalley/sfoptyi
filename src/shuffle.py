@@ -3,10 +3,9 @@ import sys
 import json
 import spotipy
 import spotipy.util as util
+import random
 
-from random import shuffle
-
-from private import username, password
+from private import username
 
 try:
     token = util.prompt_for_user_token(username, 'playlist-modify')
@@ -46,6 +45,11 @@ if token:
     shuffled_pl_id = playlists['items'][playlist_names.index(shuffled_pl_name)]['uri'].split(':')[4]
 
     #TODO read tracks from original playlist
+
+    pl_tracks = [track['track']['id'] for track in spotify.user_playlist(username, pl_id)['tracks']['items']]
+    print(pl_tracks)
+
+
 
     #TODO shuffle tracks
     #TODO replace tracks in shuffled playlist with new shuffle of songs
